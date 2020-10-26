@@ -5,7 +5,6 @@ BUILD		:= ./build
 OBJ_DIR 	:= $(BUILD)/objects
 APP_DIR		:= $(BUILD)/apps
 TARGET		:= basAlt
-INCLUDE		:= -Iinclude/
 LIBS		:= -Ilibs/
 SRC 		:= \
 	$(wildcard src/*.cpp)
@@ -16,7 +15,7 @@ all: build $(APP_DIR)/$(TARGET)
 
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) $(LIBS) $(INCLUDE) -c $< -o $@ $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) $(LIBS) -c $< -o $@ $(LDFLAGS)
 
 $(APP_DIR)/$(TARGET): $(OBJECTS)
 	@mkdir -p $(@D)

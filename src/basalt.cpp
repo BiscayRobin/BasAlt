@@ -7,7 +7,7 @@ int main(int argc, char **argv){
 	CLI::App app{"Interpreter for a BASIC Alternative"};
 
 	std::string filename = "";
-
+	
 	app.add_option("file",
 			filename,
 			"File to interpret from")->required();
