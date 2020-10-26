@@ -1,0 +1,36 @@
+unary_op 	::= MINUS
+		| NOT
+
+binary_op 	::= PLUS
+		| MINUS
+		| TIMES
+		| DIVIDE
+		| PERCENT
+		| EQ
+		| LT
+		| GT
+		| LE
+		| GE
+		| DIFF
+		| AND
+		| OR
+	
+expression 	::= NUMBER
+		| VARIABLE
+		| STR_CONTAINER STR STR_CONTAINER
+		| unary_op expression
+		| expression binary_op expression
+		| LEFT_PAREN expression RIGHT_PAREN
+
+command 	::= GOTO LABEL
+		| DEFINE variable EQ expression
+		| PRINT expression
+		| READ VARIABLE
+		| IF expression THEN NUMBER ELSE NUMBER
+
+line 		::= integer command
+
+program 	::= line
+		| line program
+	
+
