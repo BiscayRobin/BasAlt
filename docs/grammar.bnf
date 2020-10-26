@@ -32,5 +32,3 @@ line 		::= integer command
 
 program 	::= line
 		| line program
-	
-
