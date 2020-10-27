@@ -2,16 +2,12 @@
 
 #include <string>
 
-union TokenValue {
-	std::string text;
-	double number;
-};
-
-enum TokenType {
-	number,
-	string,
-	var,
-	plus,
+struct Token {
+    enum struct TokenType {
+        number_lit,
+        string_lit,
+        variable,
+        plus,
 	minus,
 	star,
 	slash,
@@ -30,14 +26,25 @@ enum TokenType {
 	or_kw,
 	not_kw,
 	print_kw,
+	read_kw,
 	goto_kw,
 	let_kw,
-	read_kw,
 	if_kw,
 	else_kw
-};
+    };
+    TokenType tag;
 
-struct Token {
-	TokenType tag;
-	TokenValue content;
+    union {
+        double number;
+        std::string text;
+    };
+    
+    Token(TokenType type);
+    Token(TokenType type, double nb);
+    Token(TokenType type, std::string str);
+    
+    Token& operator=(const Token&);
+    Token(const Token&);
+    
+    ~Token();
 };
