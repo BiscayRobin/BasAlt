@@ -1,5 +1,5 @@
-CXX 		:= clang++
-CXXFLAGS 	:= -pedantic-errors -Wall -Wextra -Werror
+CXX 		:= g++
+CXXFLAGS 	:= -Wpedantic -Wall -Wextra
 LDFLAGS 	:=
 BUILD		:= ./build
 OBJ_DIR 	:= $(BUILD)/objects
