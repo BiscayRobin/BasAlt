@@ -24,8 +24,14 @@ int main(int argc, char **argv) {
         std::cerr << "Could not open file: " << filename << "." << std::endl;
     }
 
+    std::cout << "lexing..." << std::endl;
+
     // lex it
     auto tokens = lex(file);
+
+    for (auto tok : tokens) {
+        std::cout << tok << std::endl;
+    }
 
     file.close();
 
