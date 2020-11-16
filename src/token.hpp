@@ -1,50 +1,55 @@
 #pragma once
 
+#include <ostream>
 #include <string>
 
 struct Token {
-    enum struct TokenType {
+    enum class TkType {
+        and_kw,
+        colon,
+        else_kw,
+        equal,
+        goto_kw,
+        greater_equal,
+        greater_than,
+        if_kw,
+        l_paren,
+        less_equal,
+        less_than,
+        let_kw,
+        minus,
+        not_equal,
+        not_kw,
         number_lit,
+        or_kw,
+        percent,
+        plus,
+        print_kw,
+        quotes,
+        r_paren,
+        read_kw,
+        slash,
+        star,
         string_lit,
         variable,
-        plus,
-	minus,
-	star,
-	slash,
-	percent,
-	equal,
-	greater_than,
-	less_than,
-	greater_equal,
-	less_equal,
-	not_equal,
-	quotes,
-	colon,
-	r_paren,
-	l_paren,
-	and_kw,
-	or_kw,
-	not_kw,
-	print_kw,
-	read_kw,
-	goto_kw,
-	let_kw,
-	if_kw,
-	else_kw
+        ENUM_SIZE,
     };
-    TokenType tag;
+    TkType tag;
 
     union {
         double number;
         std::string text;
     };
-    
-    Token(TokenType type);
-    Token(TokenType type, double nb);
-    Token(TokenType type, std::string str);
-    
-    Token& operator=(const Token&);
-    Token(const Token&);
-    
+
+    Token(TkType type);
+    Token(TkType type, double nb);
+    Token(TkType type, std::string str);
+
+    Token &operator=(const Token &);
+    Token(const Token &);
+    friend std::ostream &operator<<(std::ostream &os, const Token &t);
+
     ~Token();
 };
+
+std::ostream &operator<<(std::ostream &os, const Token &t);
