@@ -4,20 +4,22 @@ LDFLAGS 	:=
 BUILD		:= ./build
 OBJ_DIR 	:= $(BUILD)/objects
 APP_DIR		:= $(BUILD)/apps
+SRC_DIR		:= ./src
 TARGET		:= basAlt
 LIBS		:= -Ilibs/
 SRC 		:= \
-	$(wildcard src/*.cpp)
+	$(wildcard $(SRC_DIR)/*.cpp)
 
-OBJECTS 	:= $(SRC:%.cpp=$(OBJ_DIR)/%.o)
+OBJECTS 	:= $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 all: build $(APP_DIR)/$(TARGET)
 
-$(OBJ_DIR)/%.o: %.cpp
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(LIBS) -c $< -o $@ $(LDFLAGS)
 
 $(APP_DIR)/$(TARGET): $(OBJECTS)
+	echo $(OBJECTS)
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) -o $(APP_DIR)/$(TARGET) $^ $(LDFLAGS)
 
