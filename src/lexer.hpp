@@ -5,12 +5,15 @@
 
 #include "token.hpp"
 
-std::vector<Token> lex(std::ifstream &file);
-
-Token makeNumber(std::ifstream &file, char c);
-
-double readDecimal(std::ifstream &file, char c);
-
-Token makeVarOrKeyword(std::ifstream &file, char c);
-
-Token makeString(std::ifstream &file, char starter);
+class Lexer {
+    char curChar = EOF;
+    std::ifstream &file;
+    public:
+    Lexer(std::ifstream &file);
+    std::vector<Token> lex();
+    private:
+    Token makeNumber();
+    double readDecimal();
+    Token makeVarOrKeyword();
+    Token makeString();
+};

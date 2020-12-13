@@ -27,7 +27,7 @@ int main(int argc, char **argv) {
     std::cout << "lexing..." << std::endl;
 
     // lex it
-    auto tokens = lex(file);
+    auto tokens = Lexer(file).lex();
 
     for (auto tok : tokens) {
         std::cout << tok << std::endl;

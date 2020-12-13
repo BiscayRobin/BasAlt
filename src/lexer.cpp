@@ -4,18 +4,19 @@
 #include <iostream>
 #include <string>
 
-std::vector<Token> lex(std::ifstream &file) {
+Lexer::Lexer(std::ifstream& f): file(f){}
+
+std::vector<Token> Lexer::lex() {
     std::vector<Token> tokens = {};
-    char c;
-    while (file.get(c)) {
-        switch (c) {
-            case '0' ... '9': tokens.push_back(makeNumber(file, c)); break;
+        while (file.get(curChar)) {
+        switch (curChar) {
+            case '0' ... '9': tokens.push_back(makeNumber()); break;
             case 'a' ... 'z':
             case 'A' ... 'Z':
-                tokens.push_back(makeVarOrKeyword(file, c));
+                tokens.push_back(makeVarOrKeyword());
                 break;
             case '\'':
-            case '"': tokens.push_back(makeString(file, c)); break;
+            case '"': tokens.push_back(makeString()); break;
             case '+': tokens.push_back(Token{Token::TkType::plus}); break;
             default: break;
         }
@@ -23,11 +24,11 @@ std::vector<Token> lex(std::ifstream &file) {
     return tokens;
 }
 
-Token makeNumber(std::ifstream &file, char c) {
+Token Lexer::makeNumber() {
     double num = 0.;
-    if (c == '0') {  // special cases (binary hexadecimal octal ...)
-        file.get(c);
-        switch (toupper(c)) {
+    if (curChar == '0') {  // special cases (binary hexadecimal octal ...)
+        file.get(curChar);
+        switch (toupper(curChar)) {
             case '0' ... '9':
                 // num = readOctal(file, c);
                 break;
@@ -41,8 +42,8 @@ Token makeNumber(std::ifstream &file, char c) {
                 // should be an error
                 break;
         }
-    } else if (c >= '1' && c <= '9') {
-        num = readDecimal(file, c);
+    } else if (curChar >= '1' && curChar <= '9') {
+        num = readDecimal();
     } else {
         // should be an error
     }
@@ -50,14 +51,14 @@ Token makeNumber(std::ifstream &file, char c) {
     return Token{Token::TkType::number_lit, num};
 }
 
-double readDecimal(std::ifstream &file, char c) {
-    double num = c - '0';
+double Lexer::readDecimal() {
+    double num = curChar - '0';
     bool exit = false;
     bool decimal = false;
     double divisor = 1;
 
-    while (!exit && file.get(c)) {
-        switch (c) {
+    while (!exit && file.get(curChar)) {
+        switch (curChar) {
             case '.': decimal = true; break;
             case ',':
                 /* ignored for separating purpose */
@@ -67,7 +68,7 @@ double readDecimal(std::ifstream &file, char c) {
                 else
                     divisor /= 10;
 
-                num += divisor * (c - '0');
+                num += divisor * (curChar - '0');
                 break;
             default: exit = true; break;
         }
@@ -76,17 +77,17 @@ double readDecimal(std::ifstream &file, char c) {
     return num;
 }
 
-Token makeVarOrKeyword(std::ifstream &file, char c) {
+Token Lexer::makeVarOrKeyword() {
     std::string txt;
-    txt += c;
+    txt += curChar;
     bool exit = false;
-    while (!exit && file.get(c)) {
-        switch (c) {
+    while (!exit && file.get(curChar)) {
+        switch (curChar) {
             case '-':
             case '_':
             case '0' ... '9':
             case 'a' ... 'z':
-            case 'A' ... 'Z': txt += c; break;
+            case 'A' ... 'Z': txt += curChar; break;
             default: exit = true; break;
         }
     }
@@ -94,14 +95,14 @@ Token makeVarOrKeyword(std::ifstream &file, char c) {
     return Token{Token::TkType::variable, txt};
 }
 
-Token makeString(std::ifstream &file, char starter) {
+Token Lexer::makeString() {
     std::string txt;
     bool exit = false;
     bool escaped = false;
-    char c;
+    char starter = curChar;
 
-    while (!exit && file.get(c)) {
-        switch (c) {
+    while (!exit && file.get(curChar)) {
+        switch (curChar) {
             case '\\':  // escape character
                 if (!escaped) {
                     escaped = true;
@@ -130,7 +131,7 @@ Token makeString(std::ifstream &file, char starter) {
                 break;
 
             default:
-                txt += c;
+                txt += curChar;
                 escaped = false;
                 break;
         }
