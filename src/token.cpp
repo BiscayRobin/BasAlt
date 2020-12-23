@@ -56,6 +56,7 @@ std::ostream &operator<<(std::ostream &os, const Token &tk) {
             [static_cast<int>(Token::TkType::plus)] = "plus",
             [static_cast<int>(Token::TkType::string_lit)] = "str",
             [static_cast<int>(Token::TkType::variable)] = "var",
+            [static_cast<int>(Token::TkType::line_sep)] = "l_sep",
         };
     os << "<Tk: " << TOKEN_NAMES[static_cast<int>(tk.tag)] << " >";
 

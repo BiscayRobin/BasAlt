@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <cctype>
 
 Lexer::Lexer(std::ifstream& f) : file(f) {}
 
@@ -10,13 +11,20 @@ std::vector<Token> Lexer::lex() {
     std::vector<Token> tokens = {};
     while (next()) {
         switch (curChar) {
+            case '\n': tokens.push_back(Token{Token::TkType::line_sep}); break;
             case '0' ... '9': tokens.push_back(makeNumber()); break;
             case 'a' ... 'z':
             case 'A' ... 'Z': tokens.push_back(makeVarOrKeyword()); break;
             case '\'':
             case '"': tokens.push_back(makeString()); break;
             case '+': tokens.push_back(Token{Token::TkType::plus}); break;
-            default: break;
+            default: 
+                if(isblank(curChar));
+                else {
+                    //should switch to an error later in development
+                    std::cout << "couldn't parse: " << curChar << "\n";
+                }
+                      break;
         }
     }
     return tokens;

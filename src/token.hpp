@@ -32,6 +32,7 @@ struct Token {
         star,
         string_lit,
         variable,
+        line_sep,
         ENUM_SIZE,
     };
     TkType tag;
