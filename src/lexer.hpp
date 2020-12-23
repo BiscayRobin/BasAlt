@@ -8,10 +8,13 @@
 class Lexer {
     char curChar = EOF;
     std::ifstream &file;
-    public:
+
+   public:
     Lexer(std::ifstream &file);
     std::vector<Token> lex();
-    private:
+
+   private:
+    bool next();
     Token makeNumber();
     double readDecimal();
     Token makeVarOrKeyword();

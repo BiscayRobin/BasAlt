@@ -4,17 +4,15 @@
 #include <iostream>
 #include <string>
 
-Lexer::Lexer(std::ifstream& f): file(f){}
+Lexer::Lexer(std::ifstream& f) : file(f) {}
 
 std::vector<Token> Lexer::lex() {
     std::vector<Token> tokens = {};
-        while (file.get(curChar)) {
+    while (next()) {
         switch (curChar) {
             case '0' ... '9': tokens.push_back(makeNumber()); break;
             case 'a' ... 'z':
-            case 'A' ... 'Z':
-                tokens.push_back(makeVarOrKeyword());
-                break;
+            case 'A' ... 'Z': tokens.push_back(makeVarOrKeyword()); break;
             case '\'':
             case '"': tokens.push_back(makeString()); break;
             case '+': tokens.push_back(Token{Token::TkType::plus}); break;
@@ -24,10 +22,12 @@ std::vector<Token> Lexer::lex() {
     return tokens;
 }
 
+bool Lexer::next() { return file.get(curChar).good(); }
+
 Token Lexer::makeNumber() {
     double num = 0.;
     if (curChar == '0') {  // special cases (binary hexadecimal octal ...)
-        file.get(curChar);
+        next();
         switch (toupper(curChar)) {
             case '0' ... '9':
                 // num = readOctal(file, c);
@@ -57,7 +57,7 @@ double Lexer::readDecimal() {
     bool decimal = false;
     double divisor = 1;
 
-    while (!exit && file.get(curChar)) {
+    while (!exit && next()) {
         switch (curChar) {
             case '.': decimal = true; break;
             case ',':
@@ -81,7 +81,7 @@ Token Lexer::makeVarOrKeyword() {
     std::string txt;
     txt += curChar;
     bool exit = false;
-    while (!exit && file.get(curChar)) {
+    while (!exit && next()) {
         switch (curChar) {
             case '-':
             case '_':
@@ -101,7 +101,7 @@ Token Lexer::makeString() {
     bool escaped = false;
     char starter = curChar;
 
-    while (!exit && file.get(curChar)) {
+    while (!exit && next()) {
         switch (curChar) {
             case '\\':  // escape character
                 if (!escaped) {
