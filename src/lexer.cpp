@@ -35,6 +35,7 @@ std::vector<Token> Lexer::lex() {
             case '*': tokens.push_back(Token{Token::TkType::star}); next(); break;
             case '/': tokens.push_back(Token{Token::TkType::slash}); next(); break;
             case '%': tokens.push_back(Token{Token::TkType::percent}); next(); break;
+            case '=': tokens.push_back(Token{Token::TkType::equal}); next(); break;
             default: 
                 if(isblank(curChar))
                     next();

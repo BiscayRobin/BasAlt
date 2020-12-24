@@ -73,6 +73,7 @@ std::ostream &operator<<(std::ostream &os, const Token &tk) {
             [static_cast<int>(Token::TkType::star)] = "star",
             [static_cast<int>(Token::TkType::minus)] = "minus",
             [static_cast<int>(Token::TkType::percent)] = "percent",
+            [static_cast<int>(Token::TkType::equal)] = "equal",
         };
     os << "<Tk: " << TOKEN_NAMES[static_cast<int>(tk.tag)] << " >";
 
