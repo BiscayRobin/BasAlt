@@ -2,6 +2,7 @@
 
 #include <ostream>
 #include <string>
+#include <unordered_map>
 
 struct Token {
     enum class TkType {
@@ -54,3 +55,18 @@ struct Token {
 };
 
 std::ostream &operator<<(std::ostream &os, const Token &t);
+
+using namespace std::string_literals;
+
+const std::unordered_map<std::string,Token::TkType> KEYWORDS = {
+    {"and"s,Token::TkType::and_kw},
+    {"or"s,Token::TkType::or_kw},
+    {"not"s,Token::TkType::not_kw},
+    {"let"s,Token::TkType::let_kw},
+    {"if"s,Token::TkType::if_kw},
+    {"else"s,Token::TkType::else_kw},
+    {"read"s,Token::TkType::read_kw},
+    {"print"s,Token::TkType::print_kw},
+    {"goto"s,Token::TkType::goto_kw}
+};
+

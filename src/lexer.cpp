@@ -3,28 +3,37 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <algorithm>
 #include <cctype>
+#include "token.hpp"
 
 Lexer::Lexer(std::ifstream& f) : file(f) {}
 
 std::vector<Token> Lexer::lex() {
     std::vector<Token> tokens = {};
-    while (next()) {
+    next();
+    while (file.good()) {
         switch (curChar) {
-            case '\n': tokens.push_back(Token{Token::TkType::line_sep}); break;
+            case '\n': {
+                tokens.push_back(Token{Token::TkType::line_sep}); 
+                next(); 
+                break;
+            }
             case '0' ... '9': tokens.push_back(makeNumber()); break;
             case 'a' ... 'z':
             case 'A' ... 'Z': tokens.push_back(makeVarOrKeyword()); break;
             case '\'':
-            case '"': tokens.push_back(makeString()); break;
-            case '+': tokens.push_back(Token{Token::TkType::plus}); break;
+            case '"': tokens.push_back(makeString()); next(); break;
+            case '+': tokens.push_back(Token{Token::TkType::plus}); next(); break;
             default: 
-                if(isblank(curChar));
+                if(isblank(curChar))
+                    next();
                 else {
                     //should switch to an error later in development
-                    std::cout << "couldn't parse: " << curChar << "\n";
+                    std::cout << "couldn't parse: " << static_cast<int>(curChar) << "\n";
+                    next();
                 }
-                      break;
+            break;
         }
     }
     return tokens;
@@ -99,7 +108,8 @@ Token Lexer::makeVarOrKeyword() {
             default: exit = true; break;
         }
     }
-
+    if(KEYWORDS.find(txt) != KEYWORDS.end())
+        return Token{KEYWORDS.at(txt)};
     return Token{Token::TkType::variable, txt};
 }
 

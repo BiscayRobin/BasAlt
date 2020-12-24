@@ -4,6 +4,15 @@
 1,000
 1,000,000.2
 variable
+and
+or
+not
+if
+else
+read
+print
+let
+goto
 "double quoted"
 'simple quoted'
 "< ' >"
