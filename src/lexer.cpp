@@ -22,6 +22,33 @@ std::vector<Token> Lexer::lex() {
                     tokens.push_back(Token{Token::TkType::l_paren});
                 break;
             }
+            case '!': {
+                next();
+                if(curChar == '=') {
+                    tokens.push_back(Token{Token::TkType::not_equal});
+                    next();
+                } else;
+                    //should be an error since this not exist
+                break;
+            }
+            case '<': {
+                next();
+                if(curChar == '=') {
+                    tokens.push_back(Token{Token::TkType::less_equal});
+                    next();
+                } else
+                    tokens.push_back(Token{Token::TkType::less_than});
+                break;
+            }
+            case '>': {
+                next();
+                if(curChar == '='){
+                    tokens.push_back(Token{Token::TkType::greater_equal});
+                    next();
+                } else
+                    tokens.push_back(Token{Token::TkType::greater_than});
+                break;
+            }
             case 'a' ... 'z':
             case 'A' ... 'Z': tokens.push_back(makeVarOrKeyword()); break;
             case '0' ... '9': tokens.push_back(makeNumber()); break;

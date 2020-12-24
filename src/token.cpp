@@ -74,6 +74,11 @@ std::ostream &operator<<(std::ostream &os, const Token &tk) {
             [static_cast<int>(Token::TkType::minus)] = "minus",
             [static_cast<int>(Token::TkType::percent)] = "percent",
             [static_cast<int>(Token::TkType::equal)] = "equal",
+            [static_cast<int>(Token::TkType::greater_equal)] = "ge",
+            [static_cast<int>(Token::TkType::greater_than)] = "gt",
+            [static_cast<int>(Token::TkType::less_equal)] = "le",
+            [static_cast<int>(Token::TkType::less_than)] = "lt",
+            [static_cast<int>(Token::TkType::not_equal)] = "ne",
         };
     os << "<Tk: " << TOKEN_NAMES[static_cast<int>(tk.tag)] << " >";
 
