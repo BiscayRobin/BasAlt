@@ -68,7 +68,11 @@ std::ostream &operator<<(std::ostream &os, const Token &tk) {
             [static_cast<int>(Token::TkType::let_kw)] = "let",
             [static_cast<int>(Token::TkType::l_paren)] = "l_par",
             [static_cast<int>(Token::TkType::r_paren)] = "r_par",
-            [static_cast<int>(Token::TkType::colon)] = "colon"
+            [static_cast<int>(Token::TkType::colon)] = "colon",
+            [static_cast<int>(Token::TkType::slash)] = "slash",
+            [static_cast<int>(Token::TkType::star)] = "star",
+            [static_cast<int>(Token::TkType::minus)] = "minus",
+            [static_cast<int>(Token::TkType::percent)] = "percent",
         };
     os << "<Tk: " << TOKEN_NAMES[static_cast<int>(tk.tag)] << " >";
 

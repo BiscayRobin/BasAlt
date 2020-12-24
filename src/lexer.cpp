@@ -22,23 +22,19 @@ std::vector<Token> Lexer::lex() {
                     tokens.push_back(Token{Token::TkType::l_paren});
                 break;
             }
-            case ')': {
-                tokens.push_back(Token{Token::TkType::r_paren});
-                next();
-                break;
-            }
-            case '\n': {
-                tokens.push_back(Token{Token::TkType::line_sep}); 
-                next(); 
-                break;
-            }
-            case '0' ... '9': tokens.push_back(makeNumber()); break;
             case 'a' ... 'z':
             case 'A' ... 'Z': tokens.push_back(makeVarOrKeyword()); break;
+            case '0' ... '9': tokens.push_back(makeNumber()); break;
             case '\'':
             case '"': tokens.push_back(makeString()); next(); break;
+            case ')': tokens.push_back(Token{Token::TkType::r_paren}); next(); break;
+            case '\n': tokens.push_back(Token{Token::TkType::line_sep}); next(); break;
             case '+': tokens.push_back(Token{Token::TkType::plus}); next(); break;
             case ':': tokens.push_back(Token{Token::TkType::colon}); next(); break;
+            case '-': tokens.push_back(Token{Token::TkType::minus}); next(); break;
+            case '*': tokens.push_back(Token{Token::TkType::star}); next(); break;
+            case '/': tokens.push_back(Token{Token::TkType::slash}); next(); break;
+            case '%': tokens.push_back(Token{Token::TkType::percent}); next(); break;
             default: 
                 if(isblank(curChar))
                     next();
