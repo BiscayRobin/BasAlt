@@ -7,7 +7,6 @@
 #include "token.hpp"
 
 int main(int argc, char **argv) {
-    std::cout << "test" << std::endl;
     CLI::App app{"Interpreter for a BASIC Alternative"};
 
     std::string filename = "";

@@ -38,6 +38,7 @@ std::vector<Token> Lexer::lex() {
             case '\'':
             case '"': tokens.push_back(makeString()); next(); break;
             case '+': tokens.push_back(Token{Token::TkType::plus}); next(); break;
+            case ':': tokens.push_back(Token{Token::TkType::colon}); next(); break;
             default: 
                 if(isblank(curChar))
                     next();

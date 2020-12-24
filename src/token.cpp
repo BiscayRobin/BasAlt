@@ -67,7 +67,8 @@ std::ostream &operator<<(std::ostream &os, const Token &tk) {
             [static_cast<int>(Token::TkType::goto_kw)] = "goto",
             [static_cast<int>(Token::TkType::let_kw)] = "let",
             [static_cast<int>(Token::TkType::l_paren)] = "l_par",
-            [static_cast<int>(Token::TkType::r_paren)] = "r_par"
+            [static_cast<int>(Token::TkType::r_paren)] = "r_par",
+            [static_cast<int>(Token::TkType::colon)] = "colon"
         };
     os << "<Tk: " << TOKEN_NAMES[static_cast<int>(tk.tag)] << " >";
 
