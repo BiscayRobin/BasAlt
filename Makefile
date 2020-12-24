@@ -9,17 +9,15 @@ TARGET		:= basAlt
 LIBS		:= -Ilibs/
 SRC 		:= \
 	$(wildcard $(SRC_DIR)/*.cpp)
-
 OBJECTS 	:= $(SRC:$(SRC_DIR)/%.cpp=$(OBJ_DIR)/%.o)
 
 all: build $(APP_DIR)/$(TARGET)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp $(SRC_DIR)/%.hpp
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) $(LIBS) -c $< -o $@ $(LDFLAGS)
 
 $(APP_DIR)/$(TARGET): $(OBJECTS)
-	echo $(OBJECTS)
 	@mkdir -p $(@D)
 	$(CXX) $(CXXFLAGS) -o $(APP_DIR)/$(TARGET) $^ $(LDFLAGS)
 
