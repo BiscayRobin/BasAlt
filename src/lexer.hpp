@@ -19,4 +19,5 @@ class Lexer {
     double readDecimal();
     Token makeVarOrKeyword();
     Token makeString();
+    void ignoreComments();
 };

@@ -14,6 +14,19 @@ std::vector<Token> Lexer::lex() {
     next();
     while (file.good()) {
         switch (curChar) {
+            case '(': {
+                next();
+                if(curChar == '*')
+                    ignoreComments();
+                else
+                    tokens.push_back(Token{Token::TkType::l_paren});
+                break;
+            }
+            case ')': {
+                tokens.push_back(Token{Token::TkType::r_paren});
+                next();
+                break;
+            }
             case '\n': {
                 tokens.push_back(Token{Token::TkType::line_sep}); 
                 next(); 
@@ -156,4 +169,16 @@ Token Lexer::makeString() {
     }
 
     return Token{Token::TkType::string_lit, txt};
+}
+
+void Lexer::ignoreComments(){
+    bool star = false;
+    while(next()){
+        if (curChar == '*')
+            star = true;
+        else if (curChar == ')' && star)
+            return;
+        else 
+            star = false;
+    }
 }

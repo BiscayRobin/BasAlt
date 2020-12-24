@@ -13,6 +13,12 @@ read
 print
 let
 goto
+(**)
+(* test with content *)
+(* test with * inside *)
+( 22 )
+(22)
+()
 "double quoted"
 'simple quoted'
 "< ' >"

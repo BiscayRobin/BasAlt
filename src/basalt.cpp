@@ -1,10 +1,13 @@
 #include <iostream>
-
+#ifdef DEBUG
+    #include "basalt.hpp"
+#endif
 #include "../libs/CLI11.hpp"
 #include "lexer.hpp"
 #include "token.hpp"
 
 int main(int argc, char **argv) {
+    std::cout << "test" << std::endl;
     CLI::App app{"Interpreter for a BASIC Alternative"};
 
     std::string filename = "";
@@ -29,11 +32,17 @@ int main(int argc, char **argv) {
     // lex it
     auto tokens = Lexer(file).lex();
 
+    std::cout << "[ ";
     for (auto tok : tokens) {
-        std::cout << tok << std::endl;
+        std::cout << tok << " | ";
     }
+    std::cout << "]" << std::endl;
 
     file.close();
+
+    #ifdef DEBUG
+        std::cout << "Allocated " << allocNumb << " times" << std::endl;
+    #endif
 
     return 0;
 }
