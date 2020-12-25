@@ -26,7 +26,6 @@ struct Token {
         percent,
         plus,
         print_kw,
-        quotes,
         r_paren,
         read_kw,
         slash,
